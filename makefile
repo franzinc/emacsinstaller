@@ -1,9 +1,10 @@
-# $Id: makefile,v 1.1.1.1 2006/03/01 07:05:05 layer Exp $
+# $Id: makefile,v 1.2 2006/03/01 22:11:58 layer Exp $
 
 VERS = 21.3
+XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 EMACSDIR = emacs-$(VERS)
-EXE = emacs$(VERS).exe
+EXE = emacs$(XVERS).exe
 
 NSIS_ARGS = /V1 /DVERS=$(VERS) /DEMACSDIR=$(EMACSDIR) /DEXENAME=$(EXE) 
 ifdef LISPBOX
@@ -25,6 +26,13 @@ lispbox: FORCE
 
 $(EXE): FORCE
 	$(MAKENSIS) install.nsi
+
+install: FORCE
+	@if test -z "$(DESTDIR)"; then \
+		echo 'DESTDIR has not been set.'; \
+		exit 1; \
+	fi
+	cp -p $(EXE) $(DESTDIR)
 
 clean: FORCE
 	rm -f $(EXE)
