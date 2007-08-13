@@ -1,4 +1,4 @@
-; $Id: install.nsi,v 1.1.1.1 2006/03/01 07:05:05 layer Exp $
+; $Id: install.nsi,v 1.2 2007/08/13 23:29:07 layer Exp $
 
 !define ACLREGKEY "Software\Franz Inc.\Allegro Common Lisp"
 !define REGKEY    "Software\Franz Inc.\Gnu Emacs Installer"
@@ -7,8 +7,6 @@
 !define SHORT_PROD "Gnu Emacs"
 
 !include "StrFunc.nsh"
-; !include "ReplaceSubStr.nsh"
-
 # Declare used Functions from StrFunc
 ${StrRep}
 
@@ -30,10 +28,8 @@ InstallDirRegKey HKLM "${REGKEY}" "Install_Dir"
 
 ; Pages
 
-!ifndef LISPBOX
 Page components
 Page directory
-!endif
 Page instfiles
 
 UninstPage uninstConfirm
@@ -64,22 +60,9 @@ Section "${VERBOSE_PROD}"
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
 
-!ifdef LISPBOX
-  ; Do the work that addpm would do.  Problem is it pops up a window
-  ; and for lispbox that might be confusing.
-  WriteRegStr HKLM "${GNUREGKEY}" "emacs_dir" "$INSTDIR"
-  WriteRegExpandStr HKLM "${GNUREGKEY}" "EMACSLOADPATH" \
-    "%emacs_dir%/site-lisp;%emacs_dir%/../site-lisp;%emacs_dir%/lisp;%emacs_dir%/leim"
-  WriteRegExpandStr HKLM "${GNUREGKEY}" "SHELL" "%emacs_dir%/bin/cmdproxy.exe"
-  WriteRegExpandStr HKLM "${GNUREGKEY}" "EMACSDATA" "%emacs_dir%/etc"
-  WriteRegExpandStr HKLM "${GNUREGKEY}" "EMACSPATH" "%emacs_dir%/bin"
-  WriteRegExpandStr HKLM "${GNUREGKEY}" "EMACSDOC" "%emacs_dir%/etc"
-  WriteRegStr HKLM "${GNUREGKEY}" "TERM" "cmd"
-!else
   ; Pass the directory so the user is not asked any questions.
   ; Boy, that is one funky way to get a " into a string...
   ExecWait "$INSTDIR\bin\addpm.exe $\"$PROGRAMFILES\${VERBOSE_PROD}$\""
-!endif
 
 SectionEnd
 
@@ -92,7 +75,6 @@ SectionEnd
   var eli_text
   var allegro_dir
 
-!ifndef LISPBOX
 Section "Allegro Emacs-Lisp Interface setup"
 
   ;; check for Allegro installation first.
@@ -190,7 +172,6 @@ write_to_eli:
 end_eli_section:
 
 SectionEnd
-!endif
 
 Section "Start Menu Shortcuts"
 
@@ -198,15 +179,10 @@ Section "Start Menu Shortcuts"
 !define SMDIR "$SMPROGRAMS\${SHORT_PROD}"
 
   CreateDirectory "${SMDIR}"
-!ifdef LISPBOX
-  ; We don't run addpm, so we gotta do it manually.
-  CreateShortCut "${SMDIR}\Emacs.lnk" "$INSTDIR\bin\runemacs.exe"
-!endif
   CreateShortCut "${SMDIR}\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 
 SectionEnd
 
-!ifndef LISPBOX
 Section "Run Emacs after install"
 
   MessageBox MB_YESNO|MB_ICONQUESTION|MB_TOPMOST \
@@ -223,7 +199,6 @@ open_without_initfile:
 norun:
 
 SectionEnd
-!endif
 
 ;------------------------------------------------------------------------------
 
@@ -360,18 +335,11 @@ Section "Uninstall"
   
   SetShellVarContext all
 
-  ; Remove registry keys
   DeleteRegKey HKLM "${UNINSTKEY}"
   DeleteRegKey HKLM "${REGKEY}"
+  DeleteRegKey HKLM "${GNUREGKEY}"
 
-  ; have to manually remove emacs registry key
-  DeleteRegKey HKLM "Software\GNU\Emacs"
-
-  ; Remove files and uninstaller
-  Rmdir /r $INSTDIR
-
-  ; Remove directories used
-  RMDir /r "${SMDIR}"
-  RMDir /rebootok "$INSTDIR"
+  RMDir /r /REBOOTOK "$INSTDIR"
+  RMDir /r /REBOOTOK "${SMDIR}"
 
 SectionEnd

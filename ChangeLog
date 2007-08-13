@@ -1,3 +1,9 @@
+2007-08-13    <layer@HOBART>
+
+	* install.nsi: remove lispbox stuff, since it's in a different
+          installer
+	* makefile: remove `install'
+
 2006-03-01    <layer@HOBART>
 
 	* makefile: add install rule
