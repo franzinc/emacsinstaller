@@ -1,9 +1,16 @@
-# $Id: makefile,v 1.4 2007/08/14 18:12:26 layer Exp $
+# $Id: makefile,v 1.5 2007/08/14 20:20:05 layer Exp $
+
+AT_FRANZ := $(shell if test -d /d/emacs-dist; then echo yes; else echo no; fi)
 
 VERS = 22.1
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
+ifeq ($(AT_FRANZ),yes)
 EMACSDIR = D:/emacs-dist/emacs-$(VERS)
+else
+EMACSDIR = emacs-$(VERS)
+endif
+
 EXE = emacs$(XVERS).exe
 
 NSIS_ARGS = /V1 /DVERS=$(VERS) /DEMACSDIR=$(EMACSDIR) /DEXENAME=$(EXE) 

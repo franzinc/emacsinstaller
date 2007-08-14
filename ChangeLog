@@ -1,6 +1,8 @@
 2007-08-14    <layer@HOBART>
 
-	* makefile: 21.3 => 22.1
+	* makefile: 21.3 => 22.1; parameterize for being at franz (on
+	  hobart, actually)
+	* readme.txt: update
 
 2007-08-13    <layer@HOBART>
 
