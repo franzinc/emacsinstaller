@@ -1,3 +1,9 @@
+2008-06-26    <layer@HOBART>
+
+	* install.nsi: hide main install/uninstall section
+	* makefile: version to 22.2
+	* readme.txt: version to 22.2
+
 2007-08-14    <layer@HOBART>
 
 	* makefile: 21.3 => 22.1; parameterize for being at franz (on

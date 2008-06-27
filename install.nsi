@@ -1,4 +1,4 @@
-; $Id: install.nsi,v 1.2 2007/08/13 23:29:07 layer Exp $
+; $Id: install.nsi,v 1.3 2008/06/27 04:30:20 layer Exp $
 
 !define ACLREGKEY "Software\Franz Inc.\Allegro Common Lisp"
 !define REGKEY    "Software\Franz Inc.\Gnu Emacs Installer"
@@ -38,7 +38,7 @@ UninstPage instfiles
 ;--------------------------------
 
 ; The stuff to install
-Section "${VERBOSE_PROD}"
+Section "-${VERBOSE_PROD}"
 
   SectionIn RO
   
@@ -331,7 +331,7 @@ FunctionEnd
 
 ; Uninstaller
 
-Section "Uninstall"
+Section "-Un.Uninstall"
   
   SetShellVarContext all
 
