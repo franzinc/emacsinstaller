@@ -1,8 +1,8 @@
-# $Id: makefile,v 1.6 2008/06/27 04:30:20 layer Exp $
+# $Id: makefile,v 1.7 2008/10/23 03:23:33 layer Exp $
 
 AT_FRANZ := $(shell if test -d /d/emacs-dist; then echo yes; else echo no; fi)
 
-VERS = 22.2
+VERS = 22.3
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 ifeq ($(AT_FRANZ),yes)

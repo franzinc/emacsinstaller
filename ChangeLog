@@ -1,3 +1,8 @@
+2008-10-22    <layer@HOBART>
+
+	* makefile: 22.2 -> 22.3
+	* readme.txt: 22.2 -> 22.3
+
 2008-06-26    <layer@HOBART>
 
 	* install.nsi: hide main install/uninstall section
