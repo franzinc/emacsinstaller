@@ -1,4 +1,3 @@
-$Id: readme.txt,v 1.4 2008/10/23 03:23:33 layer Exp $
 
 How to build your own emacs installer.  The instructions below assume
 that `makefile' and `install.nsi' have been downloaded and in the
@@ -10,10 +9,10 @@ current working directory.
 
       http://ftp.gnu.org/pub/gnu/emacs/windows/
 
-   For the current version I downloaded emacs-22.3-bin-i386.zip
+   For the current version I downloaded emacs-23.1-bin-i386.zip
 
 3. Extract the Emacs binaries into the current directory.  This should
-   create an `emacs-22.3' subdirectory.
+   create an `emacs-23.1' subdirectory.
 
    (If you have downloaded a different version of emacs, modify the
    VERS variable in the `makefile'.)
