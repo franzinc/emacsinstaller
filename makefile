@@ -1,8 +1,10 @@
-# $Id: makefile,v 1.7 2008/10/23 03:23:33 layer Exp $
+# Repackage the FSF Windows binaries in a convenient installer.
+# Also offer the option at install time to integrate with our
+# Emacs-Lisp inteface.
 
 AT_FRANZ := $(shell if test -d /d/emacs-dist; then echo yes; else echo no; fi)
 
-VERS = 22.3
+VERS = 23.1
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 ifeq ($(AT_FRANZ),yes)
