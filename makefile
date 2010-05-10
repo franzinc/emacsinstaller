@@ -4,7 +4,7 @@
 
 AT_FRANZ := $(shell if test -d /d/emacs-dist; then echo yes; else echo no; fi)
 
-VERS = 23.1
+VERS = 23.2
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 ifeq ($(AT_FRANZ),yes)
