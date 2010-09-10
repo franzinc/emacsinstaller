@@ -75,13 +75,76 @@ SectionEnd
   var eli_text
   var allegro_dir
 
+Function FindAclHomeDir
+
+; setup stack of registry locations to check for Allegro directory
+; based on ACLREGKEY. bug19652
+; pairs: push 'name'
+;        push 'sub_key'
+
+;; for some reason the key name changed partway through 8.1
+
+Push "InstallationDirectory"
+Push "" ; 8.0
+
+Push "Install_Dir"
+Push "8.1 Free Express Edition"
+
+Push "InstallationDirectory"
+Push "8.1"
+
+Push "Install_Dir"
+Push "8.2 Free Express Edition"
+
+Push "Install_Dir"
+Push "8.2"
+
+StrCpy $0 10 ; set to the number of pushes above.
+
+loop:
+  Pop $1
+  Pop $2
+  IntOp $0 $0 - 2
+  IfErrors pop_error
+  ; MessageBox MB_OK|MB_ICONSTOP "Popped '$1' '$2'. Looking it up in registry."
+  StrCpy $1 "${ACLREGKEY}\$1"
+  ReadRegStr $3 HKLM $1 $2
+  ClearErrors
+  ; MessageBox MB_OK|MB_ICONSTOP "registry result: '$3'"
+  StrLen $test $3
+  IntCmp $test 0 0 0 cleanup    ; match found.
+  IntCmp $0 0 done              ; searched all locations
+  goto loop
+pop_error:
+  ; MessageBox MB_OK|MB_ICONSTOP "Got an error while popping."
+cleanup: ; pop remaining items off the stack
+  ; MessageBox MB_OK|MB_ICONSTOP "cleaning up remaining items on stack. i='$0'"
+  IntCmp $0 0 done
+  Pop $2
+  IntOp $0 $0 - 1
+  goto cleanup
+done:
+  ClearErrors
+  ; MessageBox MB_OK|MB_ICONSTOP "final result: '$3'"
+  push $3
+FunctionEnd
+
+
 Section "Allegro Emacs-Lisp Interface setup"
 
+  ; MessageBox MB_OK|MB_ICONSTOP "Starting ACL Check."
+
   ;; check for Allegro installation first.
-  ReadRegStr $allegro_dir HKLM "${ACLREGKEY}" "InstallationDirectory"
+  ;; check in each supported registry location. bug19652
+  Call FindACLHomeDir
+  Pop $allegro_dir
+
+  ; MessageBox MB_OK|MB_ICONSTOP "ACL dir is '$allegro_dir'"
+
   StrLen $test $allegro_dir
   IntCmp $test 0 end_eli_section
 
+determine_homedir:
   ; Check for existing .emacs file.
   ; if HOME is set, look for .emacs there, else look in 'C:\'
 
