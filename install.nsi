@@ -87,6 +87,9 @@ Function FindAclHomeDir
 Push "InstallationDirectory"
 Push "" ; 8.0
 
+Push "InstallationDirectory"
+Push "8.1 Student Edition"
+
 Push "Install_Dir"
 Push "8.1 Free Express Edition"
 
@@ -94,12 +97,15 @@ Push "InstallationDirectory"
 Push "8.1"
 
 Push "Install_Dir"
+Push "8.2 Student Edition"
+
+Push "Install_Dir"
 Push "8.2 Free Express Edition"
 
 Push "Install_Dir"
 Push "8.2"
 
-StrCpy $0 10 ; set to the number of pushes above.
+StrCpy $0 14 ; set to the number of pushes above.
 
 loop:
   Pop $1
