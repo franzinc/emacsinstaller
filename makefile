@@ -4,11 +4,11 @@
 
 AT_FRANZ := $(shell if test -d /d/emacs-dist; then echo yes; else echo no; fi)
 
-VERS = 23.2
+VERS = 23.3
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 ifeq ($(AT_FRANZ),yes)
-EMACSDIR = D:/emacs-dist/emacs-$(VERS)
+EMACSDIR = C:/emacs-dist/emacs-$(VERS)
 else
 EMACSDIR = emacs-$(VERS)
 endif
