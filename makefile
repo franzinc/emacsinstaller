@@ -2,7 +2,7 @@
 # Also offer the option at install time to integrate with our
 # Emacs-Lisp inteface.
 
-AT_FRANZ := $(shell if test -d /d/emacs-dist; then echo yes; else echo no; fi)
+AT_FRANZ := $(shell if test -d /c/emacs-dist; then echo yes; else echo no; fi)
 
 VERS = 23.3
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
