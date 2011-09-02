@@ -74,6 +74,43 @@ SectionEnd
   var eli_handle
   var eli_text
   var allegro_dir
+  var allegro_binary
+
+Function FindAclBinary
+; only called if an allegro_dir is found.
+; search for an existing lisp binary: mlisp.exe, alisp.exe, or allegro-express.exe
+; default is allegro-express.exe
+
+Push "allegro-express"
+Push "alisp"
+Push "mlisp"
+
+StrCpy $0 3 ; set to the number of pushes above.
+
+loop:
+  Pop $1
+  IntOp $0 $0 - 1
+  IfErrors pop_error
+  ; MessageBox MB_OK|MB_ICONSTOP "Popped '$1', checking to see if it exists."
+  IfFileExists "$allegro_dir\$1.exe" binary_found loop
+binary_found:
+  StrCpy $3 $1
+  goto cleanup
+pop_error:
+  ; MessageBox MB_OK|MB_ICONSTOP "Got an error while popping. Using default of $3."
+  StrCpy $3 $1
+cleanup: ; pop remaining items off the stack
+  ; MessageBox MB_OK|MB_ICONSTOP "cleaning up remaining items on stack. i='$0'"
+  IntCmp $0 0 done
+  Pop $2
+  IntOp $0 $0 - 1
+  goto cleanup
+done:
+  ClearErrors
+  ; MessageBox MB_OK|MB_ICONSTOP "final result: '$3'"
+  push $3
+ 
+FunctionEnd
 
 Function FindAclHomeDir
 
@@ -142,13 +179,16 @@ Section "Allegro Emacs-Lisp Interface setup"
 
   ;; check for Allegro installation first.
   ;; check in each supported registry location. bug19652
-  Call FindACLHomeDir
+  Call FindAclHomeDir
   Pop $allegro_dir
 
   ; MessageBox MB_OK|MB_ICONSTOP "ACL dir is '$allegro_dir'"
 
   StrLen $test $allegro_dir
   IntCmp $test 0 end_eli_section
+
+  Call FindAclBinary
+  Pop $allegro_binary
 
 determine_homedir:
   ; Check for existing .emacs file.
@@ -220,13 +260,13 @@ write_to_eli:
   FileWriteByte $eli_handle "13"
   FileWriteByte $eli_handle "10"
   ${StrRep} $eli_text \
-	'; (setq fi:common-lisp-image-name "$allegro_dir/mlisp.exe")' \
+	'; (setq fi:common-lisp-image-name "$allegro_dir/$allegro_binary.exe")' \
 	'\' '/'
   FileWrite $eli_handle $eli_text
   FileWriteByte $eli_handle "13"
   FileWriteByte $eli_handle "10"
   ${StrRep} $eli_text \
-	'; (setq fi:common-lisp-image-file "$allegro_dir/mlisp.dxl")' \
+	'; (setq fi:common-lisp-image-file "$allegro_dir/$allegro_binary.dxl")' \
 	'\' '/'
   FileWrite $eli_handle $eli_text
   FileWriteByte $eli_handle "13"
