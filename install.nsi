@@ -142,7 +142,16 @@ Push "8.2 Free Express Edition"
 Push "Install_Dir"
 Push "8.2"
 
-StrCpy $0 14 ; set to the number of pushes above.
+Push "Install_Dir"
+Push "9.0 Student Edition"
+
+Push "Install_Dir"
+Push "9.0 Free Express Edition"
+
+Push "Install_Dir"
+Push "9.0"
+
+StrCpy $0 20 ; set to the number of pushes above.
 
 loop:
   Pop $1
