@@ -2,7 +2,7 @@
 # Also offer the option at install time to integrate with our
 # Emacs-Lisp inteface.
 
-VERS = 24.2
+VERS = 24.3
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 EMACSDIR = ../emacs-dist/emacs-$(VERS)
