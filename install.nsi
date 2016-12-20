@@ -119,23 +119,6 @@ Function FindAclHomeDir
 ; pairs: push 'name'
 ;        push 'sub_key'
 
-;; for some reason the key name changed partway through 8.1
-
-Push "InstallationDirectory"
-Push "" ; 8.0
-
-Push "InstallationDirectory"
-Push "8.1 Student Edition"
-
-Push "Install_Dir"
-Push "8.1 Free Express Edition"
-
-Push "InstallationDirectory"
-Push "8.1"
-
-Push "Install_Dir"
-Push "8.2 Student Edition"
-
 Push "Install_Dir"
 Push "8.2 Free Express Edition"
 
@@ -143,15 +126,27 @@ Push "Install_Dir"
 Push "8.2"
 
 Push "Install_Dir"
-Push "9.0 Student Edition"
-
-Push "Install_Dir"
 Push "9.0 Free Express Edition"
 
 Push "Install_Dir"
 Push "9.0"
 
-StrCpy $0 20 ; set to the number of pushes above.
+Push "Install_Dir"
+Push "10.0 Free Express Edition"
+
+Push "Install_Dir"
+Push "10.0"
+
+Push "Install_Dir"
+Push "10.1 Beta"
+
+Push "Install_Dir"
+Push "10.1 Free Express Edition"
+
+Push "Install_Dir"
+Push "10.1"
+
+StrCpy $0 18 ; set to the number of pushes above.
 
 loop:
   Pop $1
