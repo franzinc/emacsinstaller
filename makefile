@@ -2,21 +2,14 @@
 # Also offer the option at install time to integrate with our
 # Emacs-Lisp interface.
 
-VERS = 25.1
+VERS = 25.2
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
-# Starting with Emacs 25.1, this is how the directory should be created:
-#  $ mkdir emacs-25.1
-#  $ cd emacs-25.1
-#  $ unzip ../emacs-25.1-2-i686-w64-mingw32.zip
+# Starting with Emacs 25.2, this is how the directory should be created:
+#  $ mkdir emacs-25.2
+#  $ cd emacs-25.2
+#  $ unzip ../emacs-25.2-i686.zip
 #  $ unzip ../emacs-25-i686-deps.zip
-# For reasons unknown the file
-#   emacs-25.1-2-i686-w64-mingw32.zip
-# is a lot bigger than the previous version
-#   emacs-25.1-i686-w64-mingw32.zip
-# was was created a couple of months before.  I unpacked both directories
-# and looked at the differences, and there were only a couple of small
-# files added in the new version.
 EMACSDIR = ../emacs-dist/emacs-$(VERS)
 
 EXE = emacs$(XVERS).exe
