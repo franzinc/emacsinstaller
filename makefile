@@ -2,7 +2,7 @@
 # Also offer the option at install time to integrate with our
 # Emacs-Lisp interface.
 
-VERS = 25.2
+VERS = 26.1
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 # Starting with Emacs 25.2, this is how the directory should be created:
