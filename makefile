@@ -2,14 +2,15 @@
 # Also offer the option at install time to integrate with our
 # Emacs-Lisp interface.
 
-VERS = 26.1
+VERS = 26.2
 XVERS := $(shell echo $(VERS) | sed 's/[.]//g')
 
 # Starting with Emacs 25.2, this is how the directory should be created:
 #  $ mkdir emacs-25.2
 #  $ cd emacs-25.2
-#  $ unzip ../emacs-25.2-i686.zip
-#  $ unzip ../emacs-25-i686-deps.zip
+#  $ unzip -q ../emacs-25.2-i686.zip
+#  $ unzip -q ../emacs-25-i686-deps.zip
+#  ...answer 'A' to "overwrite" question...
 EMACSDIR = ../emacs-dist/emacs-$(VERS)
 
 EXE = emacs$(XVERS).exe
